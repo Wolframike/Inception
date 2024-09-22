@@ -1,6 +1,12 @@
 FROM debian:latest
 
-RUN apt update && apt upgrade && apt install -y nginx
+RUN apt update && apt upgrade && apt install -y nginx openssl
+
+RUN mkdir /etc/nginx/ssl
+RUN openssl req -newkey rsa:2048 -nodes -x509 -days 365 \
+	-out /etc/nginx/ssl/inception.crt \
+	-keyout /etc/nginx/ssl/inception.key \
+	-subj "/C=JP/ST=Tokyo/L=Shinjuku/O=42/OU=42/CN=misargsy.42tokyo.jp"
 
 COPY default /etc/nginx/sites-available/
 

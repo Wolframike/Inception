@@ -1,8 +1,8 @@
-FROM debian:latest
+FROM debian:buster
 
-RUN apt update && apt upgrade && apt install -y php-fpm php-mysqli curl
+RUN apt update && apt upgrade -y && apt install -y php-fpm php-mysqli curl && mkdir -p /run/php && chown www-data:www-data /run/php
 
-COPY www.conf /etc/php/8.2/fpm/pool.d/
+COPY www.conf /etc/php/7.3/fpm/pool.d/
 COPY wp.sh .
 
 RUN chmod +x wp.sh

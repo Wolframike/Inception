@@ -12,7 +12,7 @@ services:
     volumes:
       - ./web:/var/www/html
     networks:
-      inception:
+      - inception
   
   wordpress:
     build: requirements/wordpress/
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./web:/var/www/html
     networks:
-      inception:
+      - inception
 
   mariadb:
     build: requirements/mariadb/
@@ -30,7 +30,20 @@ services:
     volumes:
       - ./database:/var/lib/mysql
     networks:
-      inception:
+      - inception
+
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    depends_on:
+      - mariadb
+      - wordpress
+    ports:
+      - "8080:8080"
+    networks:
+      - inception
+
 
 networks:
   inception:

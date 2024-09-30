@@ -1,8 +1,8 @@
 up:
-	docker compose up
+	docker compose -f srcs/docker-compose.yml up
 
 down:
-	docker compose down
+	docker compose -f srcs/docker-compose.yml down
 
 clean: down
 	rm -rf database web
@@ -12,6 +12,7 @@ clean: down
 	docker network prune -f
 	docker system prune -a --volumes -f
 
-re: clean up
+rebuild: clean up
+restart: down up
 
-.PHONY: up down clean
+.PHONY: up down clean rebuild restart
